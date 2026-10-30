@@ -1,0 +1,54 @@
+name: Web Project Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  project-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v4
+
+      - name: Show repository files
+        run: |
+          echo "Repository file list:"
+          pwd
+          ls -la
+
+      - name: Check HTML file
+        run: |
+          if [ -f index.html ]; then
+            echo "HTML file exists"
+          else
+            echo "HTML file not found"
+            exit 1
+          fi
+
+      - name: Check CSS file
+        run: |
+          if [ -f style.css ]; then
+            echo "CSS file exists"
+          else
+            echo "CSS file not found"
+            exit 1
+          fi
+
+      - name: Check HTML references stylesheet
+        run: |
+          if grep -q 'href="style.css"' index.html; then
+            echo "HTML correctly references style.css"
+          else
+            echo "Stylesheet reference not found in index.html"
+            exit 1
+          fi
+
+      - name: Finish
+        run: echo "Project check completed successfully"

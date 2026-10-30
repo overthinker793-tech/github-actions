@@ -1,0 +1,27 @@
+name: Student Workflow
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  information:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Student information
+        run: echo "My name is Student"
+
+      - name: Project information
+        run: echo "This is my first workflow"
+
+      - name: Date
+        run: date
+
+      - name: Operating system information
+        run: uname -a
+
+      - name: Repository files
+        run: ls -la
